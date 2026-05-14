@@ -1,4 +1,4 @@
-<x-filament-panels::page>
+<x-filament-panels::page wire:poll.3s>
     @php
         $orders = $this->getOrders();
     @endphp
@@ -26,13 +26,15 @@
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
         @forelse($orders as $order)
-            <x-filament::section :heading="$order->invoice_number" compact @class([
-                'border-warning-500 dark:border-warning-400' =>
-                    $order->status === 'pending',
-                'border-info-500 dark:border-info-400' => $order->status === 'processing',
-            ])>
+            <x-filament::section
+                :heading="$order->invoice_number"
+                compact
+                @class([
+                    'border-warning-500 dark:border-warning-400' => $order->status === 'pending',
+                    'border-info-500 dark:border-info-400' => $order->status === 'processing',
+                ])
+            >
                 <x-slot name="description">
                     <div class="flex items-center justify-between">
                         <div>
@@ -68,13 +70,21 @@
 
                     <div class="pt-2">
                         @if ($order->status === 'pending')
-                            <x-filament::button color="warning" class="w-full"
-                                wire:click="startCooking({{ $order->id }})" wire:loading.attr="disabled">
+                            <x-filament::button
+                                color="warning"
+                                class="w-full"
+                                wire:click="startCooking({{ $order->id }})"
+                                wire:loading.attr="disabled"
+                            >
                                 Start Cooking
                             </x-filament::button>
                         @elseif($order->status === 'processing')
-                            <x-filament::button color="success" class="w-full"
-                                wire:click="markReady({{ $order->id }})" wire:loading.attr="disabled">
+                            <x-filament::button
+                                color="success"
+                                class="w-full"
+                                wire:click="markReady({{ $order->id }})"
+                                wire:loading.attr="disabled"
+                            >
                                 Ready to Serve
                             </x-filament::button>
                         @endif
@@ -97,5 +107,4 @@
             </div>
         @endforelse
     </div>
-
 </x-filament-panels::page>
