@@ -41,7 +41,7 @@
                             {{-- Image --}}
                             <div class="aspect-square rounded-lg overflow-hidden mb-3 bg-gray-200 dark:bg-gray-600">
                                 @if ($product->image)
-                                    <img src="{{ Storage::temporaryUrl($product->image, now()->addMinutes(5)) }}"
+                                    <img src="{{ Storage::url($product->image) }}"
                                         alt="{{ $product->name }}"
                                         class="w-full h-full object-cover group-hover:scale-105 transition">
                                 @else
